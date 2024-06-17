@@ -1,0 +1,46 @@
+Configurando VLAN's na Topologia
+
+Acessar sw-05
+Enable
+    show vlan brief
+    configure terminal
+        vlan 10
+            name switch
+            exit
+        vlan 20
+            name server
+            exit
+        vlan 30
+            name wireless
+            exit
+        vlan 40
+            name estoque
+            exit    
+        vlan 50
+            name financeiro
+        vlan 60 
+            name gerencia
+            exit
+        end
+    write
+    show vlan brief
+
+--------------------------------------------
+
+
+Configurando VLAN 10 dos Switchs na Topologia
+
+enable
+    configure terminal
+        interface vlan 10  
+            description Interface SVI Switch 3650
+            ip address 192.168.10.252 255.255.255.0
+            no shutdown
+            end
+        write  
+        show ip interface brief
+        ping 192.168.10.252
+
+Fazer os mesmos comandos no Switch 2960 alterando somente os ip's
+
+
