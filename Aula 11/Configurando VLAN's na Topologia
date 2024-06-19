@@ -1,0 +1,70 @@
+!Configuração das VLAN's dos Switchs da Topologia
+
+!Configuração Switch 2960 (da topologia)
+enable
+    configure terminal
+        interface range gigabitEthernet 0/1 - 2
+            switchport mode trunk
+            switchport nonegotiate  
+            exit
+        interface range FastEthernet0 0/23 - 24
+            switchport mode trunk
+            switchport nonegotiate
+            end
+write     
+        
+
+
+!Configuração Switch 3650 (da topologia)
+enable
+    configure terminal
+        interface range gigabitEthernet 1/0/1 - 4
+            description Interface de Trunk
+            switchport mode trunk
+            switchport nonegotiate
+            end
+write
+show running-config (verifica as configurações que foram feitas)
+show interfaces trunk (verifica se está configurado com as VLAN's)
+
+
+!Switch 2960 associando as VLAN'S (da topologia)
+VLAN 40
+enable
+    configure terminal
+        interface FastEthernet 0/1
+            description VLAN 40 Estoque
+            switchport mode access
+            switchport access vlan 40
+            switchport nonegotiate
+            do write (para salvar)
+            do sh runn (para verificar se ocorreu tudo certo)
+            exit
+
+VLAN 50
+        interface FastEthernet 0/2
+            description VLAN 50 Financeiro
+            switchport mode access
+            switchport access vlan 50
+            switchport nonegotiate
+            do write (para salvar)
+            do sh runn (para verificar se ocorreu tudo certo)
+            exit
+
+VLAN 60
+        interface FastEthernet 0/3
+            description VLAN 60 Gerencia
+            switchport mode access
+            switchport access vlan 60
+            switchport nonegotiate
+            do write (para salvar)
+            do sh runn (para verificar se ocorreu tudo certo)
+            exit
+
+!Desativando Interfaces que não estão sendo utilizadas dos Switchs 2960
+        interface range FastEthernet 0/4 - 22 
+            description No-ArthurHACKER
+            shutdown
+            end
+write
+
