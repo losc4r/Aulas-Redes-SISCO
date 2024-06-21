@@ -1,0 +1,22 @@
+!Configurando Interfaces dos Servidores e do Acess Point (na topologia)
+<acessando o switch do meio>
+enable
+    show ip interface brief (verificar as portas do Switch)
+    ping 192.168.10.250 (pingando switchs)
+    ping 192.168.10.251
+    ping 192.168.10.252
+    configure terminal
+        interface range GigabitEthernet 1/0/10 - 12 (selecionando as portas para criação das VLANs)
+            description Interfaces de Servidores (descrição das VLANs) show running-config mostra a descrição
+            switchport mode access (modo de acesso pois vão ser acessados)
+            switchport nonegotiate (switchs não vão negociar para entradas de outros)
+            switchport access vlan 20 (marcação de porta da VLAN 20)
+            exit
+        interface GigabitEthernet 1/0/23 (selecionando porta do access point)
+            description Interface Wireless
+            switchport mode access
+            switchport nonegotiate
+            switchport access vlan 30
+            exit
+        exit   
+    copy running-config startup-config
