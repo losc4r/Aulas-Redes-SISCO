@@ -1,0 +1,55 @@
+!Ativando protocolo LACP entre os Switchs (3650 - 2960)
+!Configurando Switch 3650 (distribuição)
+enable
+    configue terminal
+        interface range GigabitEthernet 1/0/1 - 2
+            channel-group 1 mode active 
+            exit
+        interface Port-Channel 1
+            description LACP Switch 3650 para 2960 
+            switchport mode trunk  
+            switchport trunk allowed vlan all
+            end
+write
+
+show running-configue
+show etherchannel summary
+show ip interface brief
+==============================================================
+
+!Configurando Switch 2960 (distribuição para o 3650)
+enable
+    configue terminal
+        interface range GigabitEthernet 0/1 - 2
+            channel-group 1 mode passive
+            exit
+        interface Port-Channel 1
+            description LACP Switch 2960 para 3650
+            switchport mode trunk
+            switchport trunk allowed vlan all
+            end
+write
+
+show running-configue
+show etherchannel summary
+show ip interface brief
+
+
+----------------------------------------------------------------
+
+!Ativando Protocolo RSTP (deixar Switchs mais rápidos)
+!Configurando Switch 3650
+enable
+    configure terminal
+        spanning-tree vlan 1-60 root primary
+        spanning-tree mode rapid-pvst
+        exit
+write
+
+!Configurando Switch 2960
+enable
+    configure terminal
+        spanning-tree mode rapid-pvst
+        exit
+write   
+
