@@ -1,0 +1,91 @@
+!Configurando Router 1941 SPO (da topologia)
+    enable
+        configure terminal
+            interface GigabithEternet 0/0/0
+                description Interface WAN SPO para RJO
+                ip address 10.0.0.1 255.255.255.252
+                no shutdown (ativar as portas)
+                end 
+write ou copy running-config startup-config (salvar configurações)
+show running-config
+show ip interface brief 
+show ip route 
+
+============================================================
+
+!Configurando Router 1941 RJO (da topologia)
+    enable
+        configure terminal
+            interface GigabithEternet 0/0/0
+                description Interface WAN RJO para SPO 
+                ip address 10.0.0.2 255.255.255.252
+                no shutdown (ativar as portas)
+                end 
+write ou copy running-config startup-config (salvar configurações)
+show running-config
+show ip interface brief
+show ip route 
+
+
+=============================================================
+
+!Configurando Switch Multilayer 3560 (da topologia)
+    enable
+        configure terminal
+            interface GigabithEternet 1/0/24
+                description Interface  de Conexao com o Router 1941
+                no switchport (retirando interface de switch e criando porta para IP)
+                ip address 192.168.2.1 255.255.255.0
+                no shutdown
+                end
+write ou copy running-config startup-config (salvar configurações)
+show running-config
+show ip interface brief 
+show ip route
+
+=============================================================
+
+!Configurando Router 1941 (da topologia)
+    enable
+        configure terminal
+            interface GigabithEternet 1/0/24
+                description Interface de Conexao com o Switch Multilayer 3560
+                ip address 192.168.2.254 255.255.255.0
+                no shutdown
+                end
+write ou copy running-config startup-config (salvar configurações)
+show running-config
+show ip interface brief 
+show ip route
+
+==============================================================
+
+!Configurando Router SPO 
+enable 
+    configure terminal     
+        ip route 0.0.0.0 0.0.0.0 10.0.0.2 
+        end
+write
+show ip route
+
+==============================================================
+
+!Configurando Router RJO
+enable
+    configure terminal 
+        ip route 192.168.1.0 255.255.255.0 10.0.0.1
+        end
+write
+show ip route
+
+==============================================================
+
+!Configurando Switch Multilayer 3560
+enable
+    configure terminal
+        ip route 0.0.0.0 0.0.0.0 192.168.2.254
+        end
+write
+show ip route
+
+==============================================================
